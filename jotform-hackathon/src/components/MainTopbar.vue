@@ -16,7 +16,7 @@ export default {
 <style scoped>
 .topbar {
   display: flex;
-  justify-content: center; /* Center the content horizontally */
+  justify-content: center;
   align-items: center;
   background-color: #333;
   color: white;
@@ -27,7 +27,7 @@ export default {
 
 .nav-links {
   display: flex;
-  justify-content: center; /* Center the links within this container */
+  justify-content: center;
 }
 
 .topbar-link {
@@ -50,7 +50,7 @@ export default {
 @media (max-width: 768px) {
   .topbar {
     flex-direction: column;
-    align-items: center; /* Center items vertically on small screens */
+    align-items: center;
     padding: 10px 20px;
   }
 
