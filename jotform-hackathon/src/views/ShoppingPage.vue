@@ -3,12 +3,15 @@
     <div class="page-header">
       <h1>Shop</h1>
     </div>
+
     <div class="item-list">
       <ShopCard
-        v-for="(item, index) in shopCardData"
-        :key="index"
-        :productName="item.title"
-        :imageUrl="item.imageUrl"
+        v-for="item in shopCardData"
+        :key="item.id"
+        :product-name="item.title"
+        :product-price="item.price"
+        :image-url="item.imageUrl"
+        v-model:quantity="item.quantity"
       />
     </div>
   </div>
@@ -19,48 +22,36 @@ import ShopCard from '../components/ShopCard.vue';
 
 export default {
   name: 'ShoppingPage',
-  components: {
-    ShopCard
-  },
+  components: { ShopCard },
   data() {
     return {
-      shopCardData: null,
+      shopCardData: []
     };
   },
-  mounted() {
-    this.fetchItemData();
-  },
-  methods: {
-    async fetchItemData() {
-      const apiKey = import.meta.env.VITE_JOTFORM_API_KEY;
-      const formID = import.meta.env.VITE_JOTFORM_FORM_ID;
-      const endpoint = `https://api.jotform.com/form/${formID}/payment-info?apiKey=${apiKey}`;
+  async mounted() {
+    const apiKey = import.meta.env.VITE_JOTFORM_API_KEY;
+    const formID = import.meta.env.VITE_JOTFORM_FORM_ID;
+    const endpoint = `https://api.jotform.com/form/${formID}/payment-info?apiKey=${apiKey}`;
+    
+    try {
+      const res = await fetch(endpoint);
+      const { content } = await res.json();
+      this.shopCardData = content.products.map((product, idx) => {
+        let imgs = [];
+        try { imgs = JSON.parse(product.images); } catch{}
+        return {
+          id: idx,
+          title: product.name,
+          price: Number(product.price),
+          imageUrl: imgs[0] || '',
+          quantity: 0
+        };
+      });
 
-      try {
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        const products = data.content.products;
-
-        this.shopCardData = products.map(product => {
-          let imageList = [];
-
-          try {
-            imageList = JSON.parse(product.images);
-          } catch (e) {
-            console.warn('Image parsing failed for product:', product.name);
-          }
-
-          return {
-            title: product.name,
-            imageUrl: imageList[0] || null
-          }
-        });
-
-        console.log(products);
-        console.log(this.shopCardData);
-      } catch (error) {
-        console.error('Error fetching shop item data:', error);
-      }
+      console.log(content.products);
+    }
+    catch (e) {
+      console.error(e);
     }
   }
 };

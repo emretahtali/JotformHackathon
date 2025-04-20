@@ -1,15 +1,18 @@
 <template>
     <div :class="['shop-card', { 'active-card': quantity > 0 }]">
         <div class="image-wrapper" v-if="imageUrl">
-            <img :src="imageUrl" alt="Product image" class="product-image" />
+            <img :src="imageUrl" alt="Product" class="product-image" />
         </div>
 
         <h3 class="product-title">{{ productName }}</h3>
+        <div class="price-quantity-row">
+            <h4 class="product-price">${{ productPrice.toFixed(2) }}</h4>
 
-        <div class="quantity-selector">
-            <button @click="decreaseQuantity">-</button>
-            <input type="number" v-model.number="quantity" min="0" />
-            <button @click="increaseQuantity">+</button>
+            <div class="quantity-selector">
+                <button @click="decrease">−</button>
+                <input type="number" :value="quantity" @input="$emit('update:quantity', +$event.target.value)" min="0" />
+                <button @click="increase">+</button>
+            </div>
         </div>
     </div>
 </template>
@@ -18,29 +21,23 @@
 export default {
     name: 'ShopCard',
     props: {
-        productName: {
-            type: String,
-            required: true
-        },
-        imageUrl: {
-            type: String
-        }
+        productName: { type: String, required: true },
+        imageUrl: { type: String, default: '' },
+        productPrice: { type: Number, required: true },
+        quantity: { type: Number, required: true }
     },
-    data() {
-        return {
-            quantity: 0
-        };
-    },
+    emits: ['update:quantity'],
     methods: {
-        increaseQuantity() {
-            this.quantity++;
+        increase() {
+            this.$emit('update:quantity', this.quantity + 1);
         },
-        decreaseQuantity() {
-            if (this.quantity > 0) this.quantity--;
+        decrease() {
+            if (this.quantity > 0) {
+                this.$emit('update:quantity', this.quantity - 1);
+            }
         }
     }
 };
-
 </script>
 
 <style scoped>
@@ -99,13 +96,28 @@ export default {
     overflow: hidden;
 }
 
+.price-quantity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 16px 12px;
+  margin-top: auto;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .quantity-selector {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 16px 0;
-    gap: 8px;
-    margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
 }
 
 .quantity-selector input::-webkit-inner-spin-button,
