@@ -17,7 +17,8 @@ export default {
 </script>
 
 <style>
-html, body {
+html,
+body {
   background-color: #e0f7fa;
   font-family: 'Poppins', sans-serif;
 }

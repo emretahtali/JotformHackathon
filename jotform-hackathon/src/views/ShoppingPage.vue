@@ -2,15 +2,8 @@
   <div class="page_container">
     <h1>Shop</h1>
     <div class="item-list">
-      <ShopCard
-        v-for="item in store.products"
-        :key="item.id"
-        :product-name="item.title"
-        :product-price="item.price"
-        :image-url="item.imageUrl"
-        :quantity="item.quantity"
-        @update:quantity="q => store.updateQuantity(item.id, q)"
-      />
+      <ShopCard v-for="item in store.products" :key="item.id" :product-name="item.title" :product-price="item.price"
+        :image-url="item.imageUrl" :quantity="item.quantity" @update:quantity="q => store.updateQuantity(item.id, q)" />
     </div>
   </div>
 </template>
@@ -28,16 +21,16 @@ export default {
     fetch(
       `https://api.jotform.com/form/${import.meta.env.VITE_JOTFORM_FORM_ID}/payment-info?apiKey=${import.meta.env.VITE_JOTFORM_API_KEY}`
     )
-    .then(r => r.json())
-    .then(({ content }) => {
-      const list = content.products.map((p, i) => ({
-        id: i,
-        title: p.name,
-        price: Number(p.price),
-        imageUrl: JSON.parse(p.images)[0] || ''
-      }))
-      store.setProducts(list)
-    })
+      .then(r => r.json())
+      .then(({ content }) => {
+        const list = content.products.map((p, i) => ({
+          id: i,
+          title: p.name,
+          price: Number(p.price),
+          imageUrl: JSON.parse(p.images)[0] || ''
+        }))
+        store.setProducts(list)
+      })
 
     return { store }
   }
@@ -45,7 +38,6 @@ export default {
 </script>
 
 <style scoped>
-
 .page_container {
   display: flex;
   flex-direction: column;
@@ -66,5 +58,4 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 </style>

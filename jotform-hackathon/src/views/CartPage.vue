@@ -53,18 +53,18 @@ export default {
     }
 
     const buy = () => {
-  alert(`Thank you for your purchase! You spent $${store.totalPrice.toFixed(2)}.`)
-  store.resetCart()
-}
+      alert(`Thank you for your purchase! You spent $${store.totalPrice.toFixed(2)}.`)
+      store.resetCart()
+    }
 
 
-  return {
-    items: computed(() => store.cartItems),
-    total: computed(() => store.totalPrice),
-    increase,
-    decrease,
-    buy
-  }
+    return {
+      items: computed(() => store.cartItems),
+      total: computed(() => store.totalPrice),
+      increase,
+      decrease,
+      buy
+    }
   }
 }
 </script>
@@ -75,23 +75,27 @@ export default {
   margin: 40px auto;
   padding: 0 20px;
 }
+
 .cart-page h1 {
   text-align: center;
   margin-bottom: 24px;
 }
+
 .cart-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
+
 .cart-item {
   display: flex;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   min-height: 140px;
 }
+
 .image-container {
   width: 140px;
   height: 140px;
@@ -101,12 +105,14 @@ export default {
   justify-content: center;
   flex-shrink: 0;
 }
+
 .cart-item-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
   padding: 10px;
 }
+
 .cart-item-details {
   flex: 1;
   padding: 16px 20px;
@@ -114,19 +120,23 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
+
 .cart-item-details h3 {
   margin: 0 0 8px;
   font-size: 1.1rem;
   font-weight: 600;
 }
+
 .cart-item-details .price {
   margin: 0 0 4px;
   color: #444;
 }
+
 .cart-item-details .qty {
   margin: 0;
   color: #777;
 }
+
 .cart-summary {
   display: flex;
   justify-content: space-between;
@@ -135,9 +145,11 @@ export default {
   border-top: 1px solid #eee;
   padding-top: 16px;
 }
+
 .cart-total {
   font-size: 1.2rem;
 }
+
 .buy-button {
   background-color: #000;
   color: #fff;
@@ -148,14 +160,17 @@ export default {
   cursor: pointer;
   transition: background-color 0.2s;
 }
+
 .buy-button:hover {
   background-color: #222;
 }
+
 .empty {
   text-align: center;
   color: #666;
   margin-top: 40px;
 }
+
 .qty-row {
   display: flex;
   align-items: center;
@@ -175,8 +190,8 @@ export default {
   cursor: pointer;
   transition: background-color 0.2s;
 }
+
 .qty-row button:hover {
   background-color: #b2ebf2;
 }
-
 </style>

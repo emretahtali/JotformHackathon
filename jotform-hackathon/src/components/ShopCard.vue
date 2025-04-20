@@ -10,7 +10,8 @@
 
             <div class="quantity-selector">
                 <button @click="decrease">−</button>
-                <input type="number" :value="quantity" @input="$emit('update:quantity', +$event.target.value)" min="0" />
+                <input type="number" :value="quantity" @input="$emit('update:quantity', +$event.target.value)"
+                    min="0" />
                 <button @click="increase">+</button>
             </div>
         </div>
@@ -97,27 +98,27 @@ export default {
 }
 
 .price-quantity-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin: 0 16px 12px;
-  margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 0 16px 12px;
+    margin-top: auto;
 }
 
 .product-price {
-  font-size: 1rem;
-  color: #333;
-  margin: 0;
-  font-weight: 600;
-  white-space: nowrap;
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
 .quantity-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
 }
 
 .quantity-selector input::-webkit-inner-spin-button,
