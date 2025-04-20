@@ -1,31 +1,55 @@
 <template>
-    <div class="shop-card">
-      <img v-if="imageUrl" :src="imageUrl" alt="Product image" class="product-image" />
-      <h3 class="product-title">{{ productName }}</h3>
+    <div :class="['shop-card', { 'active-card': quantity > 0 }]">
+        <div class="image-wrapper" v-if="imageUrl">
+            <img :src="imageUrl" alt="Product image" class="product-image" />
+        </div>
+
+        <h3 class="product-title">{{ productName }}</h3>
+
+        <div class="quantity-selector">
+            <button @click="decreaseQuantity">-</button>
+            <input type="number" v-model.number="quantity" min="0" />
+            <button @click="increaseQuantity">+</button>
+        </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
+</template>
+
+<script>
+export default {
     name: 'ShopCard',
     props: {
-      productName: {
-        type: String,
-        required: true
-      },
-      imageUrl: {
-        type: String
-      }
+        productName: {
+            type: String,
+            required: true
+        },
+        imageUrl: {
+            type: String
+        }
+    },
+    data() {
+        return {
+            quantity: 0
+        };
+    },
+    methods: {
+        increaseQuantity() {
+            this.quantity++;
+        },
+        decreaseQuantity() {
+            if (this.quantity > 0) this.quantity--;
+        }
     }
-  };
-  </script>
-  
+};
+
+</script>
+
 <style scoped>
 .shop-card {
     background-color: #ffffff;
     border-radius: 16px;
     overflow: hidden;
     width: 260px;
+    height: 100%;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     cursor: pointer;
@@ -33,29 +57,91 @@
     flex-direction: column;
     align-items: stretch;
     text-align: center;
-    padding: 0;
+    padding: 12px;
+    min-height: 340px;
+    max-height: 340px;
 }
 
 .shop-card:hover {
     transform: scale(1.04);
 }
 
+.active-card {
+    box-shadow: inset 0 0 0 3px black;
+}
+
+.image-wrapper {
+    padding: 12px 12px 0;
+    background-color: #f9f9f9;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
 
 .product-image {
     clip-path: inset(2% 0);
     width: 100%;
-    height: 200px;
+    height: 180px;
     object-fit: contain;
-    background-color: #f9f9f9;
-    margin: 0;
     display: block;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
 }
 
 .product-title {
     margin-left: 20px;
     margin-right: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0 16px;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-height: 3em;
+    line-height: 1.4;
+    overflow: hidden;
+}
+
+.quantity-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 0;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.quantity-selector input::-webkit-inner-spin-button,
+.quantity-selector input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-selector input {
+    -moz-appearance: textfield;
+}
+
+.quantity-selector button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: #e0f7fa;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.quantity-selector button:hover {
+    background-color: #b2ebf2;
+}
+
+.quantity-selector input {
+    width: 40px;
+    height: 32px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
 }
 
 @media (max-width: 768px) {
@@ -70,4 +156,3 @@
     }
 }
 </style>
-  
