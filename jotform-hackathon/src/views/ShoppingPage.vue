@@ -62,15 +62,18 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  margin-top: 20px;
+  /* margin: 20px 50px 50px 50px; */
 }
 
 .item-card {
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
+  margin: 20px;
   width: 300px;
+  height: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
   transition: transform 0.3s ease;
 }
 
