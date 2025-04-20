@@ -2,7 +2,7 @@
   <div class="topbar">
     <div class="nav-links">
       <router-link to="/" class="topbar-link">Home</router-link>
-      <router-link to="/about" class="topbar-link">About</router-link>
+      <router-link to="/shop" class="topbar-link">Shop</router-link>
     </div>
   </div>
 </template>
