@@ -1,8 +1,8 @@
 <template>
   <div class="topbar">
     <div class="nav-links">
-      <router-link to="/" class="topbar-link">Home</router-link>
-      <router-link to="/shop" class="topbar-link">Shop</router-link>
+      <router-link to="/" class="topbar-link">Shop</router-link>
+      <router-link to="/cart" class="topbar-link">Cart</router-link>
     </div>
   </div>
 </template>
