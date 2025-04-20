@@ -4,17 +4,24 @@
       <h1>Shop</h1>
     </div>
     <div class="item-list">
-      <div v-for="(item, index) in items" :key="index" class="item-card">
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.description }}</p>
-      </div>
+      <ShopCard
+        v-for="(item, index) in items"
+        :key="index"
+        :productName="item.title"
+        :productDetail="item.description"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import ShopCard from '../components/ShopCard.vue';
+
 export default {
   name: 'ShoppingPage',
+  components: {
+    ShopCard
+  },
   data() {
     return {
       items: [
@@ -62,35 +69,6 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  /* margin: 20px 50px 50px 50px; */
-}
-
-.item-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin: 20px;
-  width: 300px;
-  height: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-  transition: transform 0.3s ease;
-}
-
-.item-card:hover {
-  transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
-  .item-card {
-    width: 45%;
-  }
-}
-
-@media (max-width: 480px) {
-  .item-card {
-    width: 90%;
-  }
 }
 
 </style>
