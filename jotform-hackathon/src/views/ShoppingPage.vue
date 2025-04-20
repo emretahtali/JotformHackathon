@@ -5,10 +5,10 @@
     </div>
     <div class="item-list">
       <ShopCard
-        v-for="(item, index) in shopCardItemData"
+        v-for="(item, index) in shopCardData"
         :key="index"
         :productName="item.title"
-        :productDetail="item.description"
+        :imageUrl="item.imageUrl"
       />
     </div>
   </div>
@@ -24,29 +24,7 @@ export default {
   },
   data() {
     return {
-      shopCardItemData: null,
-
-      // items: [
-      //   { title: 'Item 1', description: 'This is item 1 description.' },
-      //   { title: 'Item 2', description: 'This is item 2 description.' },
-      //   { title: 'Item 3', description: 'This is item 3 description.' },
-      //   { title: 'Item 4', description: 'This is item 4 description.' },
-      //   { title: 'Item 5', description: 'This is item 5 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' },
-      //   { title: 'Item 6', description: 'This is item 6 description.' }
-      // ]
+      shopCardData: null,
     };
   },
   mounted() {
@@ -54,25 +32,36 @@ export default {
   },
   methods: {
     async fetchItemData() {
-    const apiKey = import.meta.env.VITE_JOTFORM_API_KEY;
-    const formID = import.meta.env.VITE_JOTFORM_FORM_ID;
-    const endpoint = `https://api.jotform.com/form/${formID}/payment-info?apiKey=${apiKey}`;
+      const apiKey = import.meta.env.VITE_JOTFORM_API_KEY;
+      const formID = import.meta.env.VITE_JOTFORM_FORM_ID;
+      const endpoint = `https://api.jotform.com/form/${formID}/payment-info?apiKey=${apiKey}`;
 
-    try {
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    const products = data.content.products;
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        const products = data.content.products;
 
-    this.shopCardItemData = products.map(product => ({
-      title: product.name,
-      description: product.description || 'No description provided.'
-    }));
+        this.shopCardData = products.map(product => {
+          let imageList = [];
 
-    console.log(this.shopCardItemData);
-  } catch (error) {
-    console.error('Error fetching shop item data:', error);
-  }
-}
+          try {
+            imageList = JSON.parse(product.images);
+          } catch (e) {
+            console.warn('Image parsing failed for product:', product.name);
+          }
+
+          return {
+            title: product.name,
+            imageUrl: imageList[0] || null
+          }
+        });
+
+        console.log(products);
+        console.log(this.shopCardData);
+      } catch (error) {
+        console.error('Error fetching shop item data:', error);
+      }
+    }
   }
 };
 </script>
